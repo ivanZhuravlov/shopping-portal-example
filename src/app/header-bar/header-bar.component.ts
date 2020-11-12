@@ -41,4 +41,8 @@ export class HeaderBarComponent implements OnInit {
     this.router.navigate(['/login', {trigger: 'SIGN_OUT'}]);
   }
 
+  pass(): void {
+    throw new Error('unspecified functionality');
+  }
+
 }

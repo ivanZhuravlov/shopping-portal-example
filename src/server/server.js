@@ -12,7 +12,7 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const {userModel, productModel } = require('./models/all');
+const {userModel, productModel} = require('./models/all');
 
 // The database variable
 let database;
