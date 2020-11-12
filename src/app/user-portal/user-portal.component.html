@@ -1,0 +1,16 @@
+<app-header-bar></app-header-bar>
+<h2 class="mb-2 text-center" style="text-decoration: underline">User Portal</h2>
+<div class="row">
+  <div class="col-4">
+    <h3>Available Products</h3>
+    <app-product-list [products]="productList" displayType="all"></app-product-list>
+  </div>
+  <div class="col-4">
+    <h3>Cart</h3>
+    <app-product-list [products]="cartList" displayType="cart"></app-product-list>
+  </div>
+  <div class="col-4">
+    <h3>Wishlist</h3>
+    <app-product-list [products]="wishList" displayType="wishlist"></app-product-list>
+  </div>
+</div>

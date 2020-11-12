@@ -1,0 +1,24 @@
+<div class="card" style="margin-bottom: 1rem">
+  <div class="card-header">
+    <div class="row">
+      <div class="col"><h4 class="userName" [textContent]="userName"></h4></div>
+      <div *ngIf="loggedInUserType === 'admin'" class="col">
+        <div class="float-right btn-group dropright">
+          <button class="btn btn-info dropdown-toggle" type="button" id="productOptions" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Options
+          </button>
+          <div>
+            <div class="dropdown-menu" aria-labelledby="userOptions">
+              <button class="dropdown-item" (click)="pass()">Edit user</button>
+              <button class="dropdown-item" (click)="pass()">Delete User</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="card-body"><h5 class="userType" [textContent]="userType + ' type account'"
+                             style="font-style: italic"></h5></div>
+</div>

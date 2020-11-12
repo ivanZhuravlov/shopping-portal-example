@@ -1,0 +1,54 @@
+<div class="card" style="margin-bottom: 1rem">
+  <div class="card-header">
+    <div class="row">
+      <div class="col"><h4 class="productName" [textContent]="productName"></h4></div>
+      <div *ngIf="displayType === 'all'" class="col">
+
+        <div class="float-right btn-group dropright">
+          <button class="btn btn-info dropdown-toggle" type="button" id="productOptions" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Options
+          </button>
+          <div *ngIf="userType === 'user'">
+            <div class="dropdown-menu" aria-labelledby="productOptions">
+              <button class="dropdown-item" (click)="addToCart()">Add to cart</button>
+              <button class="dropdown-item" (click)="addToWishlist()">Add to wishlist</button>
+            </div>
+          </div>
+          <div *ngIf="userType === 'admin'">
+            <div class="dropdown-menu" aria-labelledby="productOptions">
+              <button class="dropdown-item" (click)="editProduct()">Edit product</button>
+              <button class="dropdown-item" (click)="deleteProduct()">Delete Product</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="displayType === 'cart'" class="col">
+        <div class="float-right btn-group dropright">
+          <button class="btn btn-info dropdown-toggle" type="button" id="cartOptions" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Options
+          </button>
+          <div class="dropdown-menu" aria-labelledby="cartOptions">
+            <button class="dropdown-item" (click)="removeFromCart()">Remove from cart</button>
+            <button class="dropdown-item" (click)="moveToWishlist()">Move to wishlist</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="displayType === 'wishlist'" class="col">
+        <div class="float-right btn-group dropright">
+          <button class="btn btn-info dropdown-toggle" type="button" id="wishlistOptions" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Options
+          </button>
+          <div class="dropdown-menu" aria-labelledby="cartOptions">
+            <button class="dropdown-item" (click)="removeFromWishlist()">Remove from wishlist</button>
+            <button class="dropdown-item" (click)="moveToCart()">Move to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body"><h5 class="productBrand" [textContent]="'From ' + productBrand"
+                             style="font-style: italic"></h5></div>
+</div>
