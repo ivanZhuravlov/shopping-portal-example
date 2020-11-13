@@ -87,6 +87,7 @@ export class ProductComponent implements OnInit {
   }
 
   editProduct(): boolean | void {
+    // TODO: edit product server request and ui
     this.unimplemented(false);
   }
 

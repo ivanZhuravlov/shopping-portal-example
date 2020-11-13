@@ -74,9 +74,9 @@ export class UsersService {
     // this.user.next(nextUser);
   }
 
-  postUser(id, user): Promise<any> {
+  postUser(user): Promise<any> {
     // tslint:disable-next-line:variable-name
-    return this.httpClient.post(`${this.usersApi}/${id}`, user).toPromise().then(_user => {
+    return this.httpClient.post(`${this.usersApi}`, user).toPromise().then(_user => {
       this.getUsers();
       // this.getUserById(id);
       return _user;
@@ -131,6 +131,7 @@ export class UsersService {
   }
 
   putCart(userId, productId): void {
+    // TODO: implement put cart request and ui (if needed)
     this.unimplemented(false);
   }
 

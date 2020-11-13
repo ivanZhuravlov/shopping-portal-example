@@ -15,6 +15,9 @@ export class HeaderBarComponent implements OnInit {
       this.userName = name;
       this.userType = type;
     });
+    if (!this.loggedInUserType) {
+      this.loggedInUserType = this.auth.user.type || '';
+    }
   }
 
   parents = {
@@ -27,6 +30,8 @@ export class HeaderBarComponent implements OnInit {
   @Input() userName = '';
   @Input() userType = '';
   @Input() parent = '';
+
+  loggedInUserType = '';
 
   cart = '';
 
@@ -43,7 +48,7 @@ export class HeaderBarComponent implements OnInit {
     // tslint:disable-next-line:variable-name
     this.us.getCart(this.auth.user._id).then(_cart => {
       if (_cart.length) {
-        this.us.putUser(this.auth.user._id, {cart: []});
+        this.us.putUser(this.auth.user._id, {cart: []}).then(() => this.us.getCart(this.auth.user._id));
         return _cart;
       }
       // tslint:disable-next-line:variable-name max-line-length
@@ -63,6 +68,10 @@ export class HeaderBarComponent implements OnInit {
 
   routeToAdminPortal(): void {
     this.router.navigate(['/admin', {trigger: 'USER_PORTAL'}]);
+  }
+
+  routeToRegistration(): void {
+    this.router.navigate(['/register', {trigger: this.parent.toUpperCase()}]);
   }
 
   unimplemented(direct: boolean = true): void {

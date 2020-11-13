@@ -12,6 +12,8 @@ import {UsersService} from '../services/users.service';
 })
 export class LoginComponent implements OnInit {
 
+  title = 'login';
+
   form: FormGroup;
   failedLogin;
 
@@ -44,4 +46,7 @@ export class LoginComponent implements OnInit {
 
   }
 
+  routeToRegistration(): void {
+    this.router.navigate(['/register', {trigger: 'SIGN_IN'}]);
+  }
 }

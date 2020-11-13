@@ -1,3 +1,4 @@
+<app-header-bar [parent]="title"></app-header-bar>
 <div class="text-center body-div" style="">
   <form [formGroup]="form" class="form-signin" (ngSubmit)="submitLoginForm()">
     <h3 class="mb-3 font-weight-normal">Please sign in</h3>
@@ -9,7 +10,7 @@
 
     <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="form.invalid">Sign in</button>
     <br>
-    <button class="btn btn-lg btn-outline-primary btn-block" (click)="submitLoginForm">Register Account</button>
+    <button class="btn btn-lg btn-outline-primary btn-block" (click)="routeToRegistration()">Register Account</button>
     <br>
     <p class="h6 mt-2 mb-3 text-muted" style="font-size: 14px">Default admin login:</p>
     <p class="h6 mt-2 mb-3 text-muted" style="font-size: 12px">Username: pablo</p>
