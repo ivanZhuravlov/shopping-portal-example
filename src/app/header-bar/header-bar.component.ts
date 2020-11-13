@@ -17,8 +17,18 @@ export class HeaderBarComponent implements OnInit {
     });
   }
 
+  parents = {
+    admin: ['admin-portal'],
+    user: ['user-portal'],
+    logout: ['admin-portal', 'user-portal'],
+
+  };
+
   @Input() userName = '';
   @Input() userType = '';
+  @Input() parent = '';
+
+  cart = '';
 
   ngOnInit(): void {
     if (!this.userName || !this.userType) {
@@ -31,7 +41,13 @@ export class HeaderBarComponent implements OnInit {
   purchase(): void {
     // console.log('purchasing...');
     // tslint:disable-next-line:variable-name
-    this.us.getCart(this.auth.user._id).then(_cart => this.us.putUser(this.auth.user._id, {cart: []})).then(() => alert(`Successfully purchased cart items`));
+    this.us.getCart(this.auth.user._id).then(_cart => {
+      if (_cart.length) {
+        this.us.putUser(this.auth.user._id, {cart: []});
+        return _cart;
+      }
+      // tslint:disable-next-line:variable-name max-line-length
+    }).then(_cart => alert(`Successfully purchased ${_cart.length} unique item${_cart.length === 1 ? '' : 's'} in cart!`)).catch(() => alert('No items in cart!'));
 
   }
 
@@ -41,8 +57,20 @@ export class HeaderBarComponent implements OnInit {
     this.router.navigate(['/login', {trigger: 'SIGN_OUT'}]);
   }
 
-  pass(): void {
-    throw new Error('unspecified functionality');
+  routeToUserPortal(): void {
+    this.router.navigate(['/user', {trigger: 'ADMIN_PORTAL'}]);
+  }
+
+  routeToAdminPortal(): void {
+    this.router.navigate(['/admin', {trigger: 'USER_PORTAL'}]);
+  }
+
+  unimplemented(direct: boolean = true): void {
+    if (direct) {
+      throw new Error('function not specified');
+    } else {
+      throw new Error('unimplemented');
+    }
   }
 
 }

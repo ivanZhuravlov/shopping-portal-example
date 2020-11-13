@@ -264,6 +264,11 @@ app.delete("/api/users/:id", function (req, res) {
 //endregion
 
 //region Carts
+/*  "/api/carts/:userid"
+ *   GET: gets user's (by userid) cart
+ */
+// TODO: implement get cart
+
 /*  "/api/carts/:userid/:productid"
  *   POST: adds product by productid to user's (by userid) cart
  */
@@ -316,6 +321,11 @@ app.delete("/api/carts/:userid/:productid", function (req, res) {
 //endregion
 
 //region Wishlists
+/*  "/api/wishlists/:userid"
+ *   GET: gets user's (by userid) wishlist
+ */
+// TODO: implement get wishlist
+
 /*  "/api/wishlists/:userid/:productid"
  *   POST: adds product by productid to user's (by userid) wishlist
  */

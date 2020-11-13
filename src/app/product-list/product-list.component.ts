@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {ProductsService} from '../services/products.service';
 import {AuthService} from '../services/auth.service';
 
@@ -12,6 +12,7 @@ export class ProductListComponent implements OnInit {
   @Input() products = [];
   @Input() displayType = '';
   @Input() userType = '';
+  @Input() parent = '';
 
   constructor(private ps: ProductsService, private auth: AuthService) { }
 
@@ -19,13 +20,13 @@ export class ProductListComponent implements OnInit {
     if (this.displayType === 'all' && !this.products.length) {
       this.getProducts();
     }
-    if (!this.userType) {
-      this.userType = this.auth.user.type || '';
-    }
+    // if (!this.userType) {
+    //   this.userType = this.auth.user.type || '';
+    // }
   }
 
   getProducts(): void {
-    this.products = this.ps.get();
+    this.ps.get().then(prods => this.products = prods);
   }
 
 }

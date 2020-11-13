@@ -1,14 +1,22 @@
 <div class="row">
-  <div class="col"><p class="h5" [textContent]="'Welcome, ' + userName"></p></div>
-  <div *ngIf="userType === 'user'">
+  <div class="col">
+    <p class="h5" [textContent]="'Welcome, ' + userName"></p>
+  </div>
+  <div *ngIf="parents.user.includes(parent)" class="">
     <button class="btn btn-success" (click)="purchase()">Purchase Items in Cart</button>
   </div>
-  <div *ngIf="userType === 'admin'">
-    <button class="btn btn-danger" (click)="pass()">Create Product</button>
-    <button class="btn btn-danger" (click)="pass()">Register User</button>
+  <div *ngIf="parents.admin.includes(parent)" class="">
+    <button class="btn btn-success" (click)="unimplemented()">Create Product</button>
+    <button class="btn btn-success" (click)="unimplemented()">Register User</button>
+  </div>
+  <div *ngIf="parents.admin.includes(parent)" class=" ml-2">
+    <button class="btn btn-warning btn-dark" (click)="routeToUserPortal()">User Portal</button>
+  </div>
+  <div *ngIf="parents.user.includes(parent) && userType === 'admin'" class=" ml-2">
+    <button class="btn btn-warning btn-dark" (click)="routeToAdminPortal()">Admin Portal</button>
   </div>
   <div class="col">
-    <div class="float-right">
+    <div *ngIf="parents.logout.includes(parent)" class="float-right">
       <button class="btn btn-danger" (click)="logout()">Log out</button>
     </div>
   </div>

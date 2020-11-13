@@ -10,8 +10,8 @@
           </button>
           <div>
             <div class="dropdown-menu" aria-labelledby="userOptions">
-              <button class="dropdown-item" (click)="pass()">Edit user</button>
-              <button class="dropdown-item" (click)="pass()">Delete User</button>
+              <button class="dropdown-item" (click)="editUser()">Edit user</button>
+              <button class="dropdown-item" (click)="deleteUser()">Delete User</button>
             </div>
           </div>
         </div>
@@ -19,6 +19,6 @@
 
     </div>
   </div>
-  <div class="card-body"><h5 class="userType" [textContent]="userType + ' type account'"
+  <div class="card-body"><h5 class="userType" [textContent]="userType + ' account'"
                              style="font-style: italic"></h5></div>
 </div>

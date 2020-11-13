@@ -38,7 +38,7 @@ export class UsersService {
   // Error handling
   private static error(error: any): void {
     const message = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+      error.status ? `${error.status} - ${error.statusText}` : 'Server request error';
     console.error(message);
   }
 
@@ -61,32 +61,59 @@ export class UsersService {
     // tslint:disable-next-line:variable-name
     return this.httpClient.get(`${this.usersApi}/${id}`).toPromise().then(_user => {
       this.user.next(_user);
+      return _user;
       // console.log(_user);
       // tslint:disable-next-line:forin
-      for (const userKey in _user) {
-        // console.log(userKey);
-        nextUser[userKey] = _user[userKey];
-      }
+      // for (const userKey in _user) {
+      //   // console.log(userKey);
+      //   nextUser[userKey] = _user[userKey];
+      // }
       // console.log('nextUser:', nextUser);
     }).catch(UsersService.error);
     // console.log('nextUser:', nextUser);
     // this.user.next(nextUser);
   }
 
+  postUser(id, user): Promise<any> {
+    // tslint:disable-next-line:variable-name
+    return this.httpClient.post(`${this.usersApi}/${id}`, user).toPromise().then(_user => {
+      this.getUsers();
+      // this.getUserById(id);
+      return _user;
+    }).catch(UsersService.error);
+  }
+
   putUser(id, user): Promise<any> {
     // tslint:disable-next-line:variable-name
     return this.httpClient.put(`${this.usersApi}/${id}`, user).toPromise().then(_user => {
-      this.user.next(_user);
+      this.getUsers();
+      // this.getUserById(id);
+      return _user;
+    }).catch(UsersService.error);
+  }
+
+  deleteUser(id): Promise<any> {
+    // tslint:disable-next-line:variable-name
+    return this.httpClient.delete(`${this.usersApi}/${id}`).toPromise().then(_user => {
+      this.getUsers();
+      // this.getUserById(id);
+      return _user;
     }).catch(UsersService.error);
   }
 
   getCart(id): Promise<Array<any>> {
     // let nextCart;
     // tslint:disable-next-line:variable-name
-    return this.getUserById(id).then(_user => {
-      this.cart.next(_user);
-      return _user;
-    });
+    // return this.getUserById(id).then(_user => {
+    //   this.cart.next(_user);
+    //   return _user.cart;
+    // }).catch(UsersService.error);
+
+    // tslint:disable-next-line:variable-name
+    return this.httpClient.get(`${this.usersApi}/${id}`).toPromise().then((_user: any) => {
+      this.cart.next(_user.cart);
+      return _user.cart;
+    }).catch(UsersService.error);
     // tslint:disable-next-line:variable-name
     // const userSub = this.user.subscribe(_user => nextCart = _user.cart);
     // userSub.unsubscribe();
@@ -104,7 +131,7 @@ export class UsersService {
   }
 
   putCart(userId, productId): void {
-    return;
+    this.unimplemented(false);
   }
 
   deleteCart(userId, productId): Promise<Array<any>> {
@@ -121,10 +148,16 @@ export class UsersService {
   getWishlist(id): Promise<Array<any>> {
     // let nextWishlist;
     // tslint:disable-next-line:variable-name
-    return this.getUserById(id).then(_user => {
+    // return this.getUserById(id).then(_user => {
+    //   this.wishlist.next(_user.wishlist);
+    //   return _user.wishList;
+    // }).catch(UsersService.error);
+
+    // tslint:disable-next-line:variable-name
+    return this.httpClient.get(`${this.usersApi}/${id}`).toPromise().then((_user: any) => {
       this.wishlist.next(_user.wishlist);
-      return _user.wishList;
-    });
+      return _user.wishlist;
+    }).catch(UsersService.error);
   }
 
   postWishlist(userId, productId): void {
@@ -133,7 +166,7 @@ export class UsersService {
     return this.httpClient.post(`${this.wishlistsApi}/${userId}/${productId}`).toPromise().then(_wishlist => {
       this.wishlist.next(_wishlist);
       return _wishlist;
-    });
+    }).catch(UsersService.error);
   }
 
   deleteWishlist(userId, productId): void {
@@ -146,7 +179,11 @@ export class UsersService {
     }).catch(UsersService.error);
   }
 
-  manualUpdate(): void {
-    throw new Error('unimplemented');
+  unimplemented(direct: boolean = true): void {
+    if (direct) {
+      throw new Error('function not specified');
+    } else {
+      throw new Error('unimplemented');
+    }
   }
 }

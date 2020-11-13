@@ -13,9 +13,15 @@ export class ProductComponent implements OnInit {
   @Input() productId;
   @Input() productName;
   @Input() productBrand;
+  @Input() cartCount;
   @Input() displayType = ''; // 'all' or 'cart' or 'wishlist'
   @Input() userType = '';
-  temp = '';
+  @Input() parent = '';
+
+  parents = {
+    admin: ['admin-portal'],
+    user: ['user-portal'],
+  };
 
   constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService) { }
 
@@ -80,14 +86,20 @@ export class ProductComponent implements OnInit {
     return success;
   }
 
-  editProduct(): boolean {
-    throw new Error('not implemented');
+  editProduct(): boolean | void {
+    this.unimplemented(false);
   }
 
-  deleteProduct(): boolean {
-    throw new Error('not implemented');
+  deleteProduct(): boolean | void {
+    this.ps.deleteProduct(this.productId);
   }
 
-
+  unimplemented(direct: boolean = true): void {
+    if (direct) {
+      throw new Error('function not specified');
+    } else {
+      throw new Error('unimplemented');
+    }
+  }
 
 }
