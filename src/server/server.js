@@ -268,7 +268,18 @@ app.delete("/api/users/:id", function (req, res) {
 /*  "/api/carts/:userid"
  *   GET: gets user's (by userid) cart
  */
-// TODO: implement get cart
+app.get("/api/carts/:id", function (req, res) {
+  database
+    .collection(USERS_COLLECTION)
+    .findOne({ _id: new ObjectID(req.params.id) }, function (error, data) {
+      if (error) {
+        manageError(res, error.message, "Failed to get user's cart.");
+      } else {
+        // console.log('User found.')
+        res.status(200).json(data.cart);
+      }
+    });
+});
 
 /*  "/api/carts/:userid/:productid"
  *   POST: adds product by productid to user's (by userid) cart
