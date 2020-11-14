@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ProductsService} from '../services/products.service';
-import {AuthService} from '../services/auth.service';
-import {UsersService} from '../services/users.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ProductsService } from '../services/products.service';
+import { AuthService } from '../services/auth.service';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-product',
@@ -10,12 +10,13 @@ import {UsersService} from '../services/users.service';
 })
 export class ProductComponent implements OnInit {
 
+  constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService) { }
+
   @Input() productId;
   @Input() productName;
   @Input() productBrand;
   @Input() cartCount;
   @Input() displayType = ''; // 'all' or 'cart' or 'wishlist'
-  @Input() userType = '';
   @Input() parent = '';
 
   parents = {
@@ -23,19 +24,13 @@ export class ProductComponent implements OnInit {
     user: ['user-portal'],
   };
 
-  constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService) { }
-
   ngOnInit(): void {
-    // console.log(`product in ${this.displayType}:`, {_id: this.productID, name: this.productName, brand: this.productBrand});
     if (this.productId && (!this.productName || !this.productBrand)) {
-        // console.log('getting product info...');
         this.ps.getById(this.productId).then(product => {
           this.productName = product.name;
           this.productBrand = product.brand;
         });
-        // console.log(`updated product in ${this.displayType}:`, {_id: this.productID, name: this.productName, brand: this.productBrand});
     }
-    // if (!this.userType) {this.userType = ''; }
   }
 
   addToCart(): boolean {

@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from '../services/auth.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-list',
@@ -8,10 +8,10 @@ import {AuthService} from '../services/auth.service';
 })
 export class UserListComponent implements OnInit {
 
+  constructor(private auth: AuthService) { }
+
   @Input() users = [];
   @Input() loggedInUserType = '';
-
-  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
     if (!this.loggedInUserType) {

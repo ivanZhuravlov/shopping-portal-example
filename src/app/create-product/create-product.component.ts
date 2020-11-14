@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../services/auth.service';
-import {Router} from '@angular/router';
-import {UsersService} from '../services/users.service';
-import {ProductsService} from '../services/products.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { UsersService } from '../services/users.service';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-create-product',
@@ -11,8 +11,6 @@ import {ProductsService} from '../services/products.service';
   styleUrls: ['./create-product.component.css']
 })
 export class CreateProductComponent implements OnInit {
-
-  title = 'create-product';
 
   constructor(private readonly fb: FormBuilder, private auth: AuthService, private router: Router, private ps: ProductsService) {
     this.form = this.fb.group({
@@ -23,6 +21,8 @@ export class CreateProductComponent implements OnInit {
     this.successfulCreation = false;
   }
 
+  title = 'create-product';
+
   form: FormGroup;
   failedCreation;
   successfulCreation;
@@ -32,8 +32,6 @@ export class CreateProductComponent implements OnInit {
 
   submitCreationForm(): void {
     if (this.form.valid) {
-      // console.log(this.form.getRawValue());
-      const creationFormVal = this.form.getRawValue();
       this.ps.postProduct(this.form.getRawValue()).then(product => {
         if (!product) {
           console.log(product);

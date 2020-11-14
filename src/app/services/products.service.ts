@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,29 +23,23 @@ export class ProductsService {
     console.error(message);
   }
 
-  get(): Promise<Array<any>> {
-    // const nextProducts = [];
+  getProducts(): Promise<Array<any>> {
     // @ts-ignore
-    // tslint:disable-next-line:max-line-length
-    // this.httpClient.get(this.productsApi).toPromise().then(prods => prods.forEach(prod => nextProducts.push(prod))).catch(ProductsService.error);
-
-    // this.products.next(nextProducts);
-
-    return this.httpClient.get(this.productsApi).toPromise().then(prods => {
+    return this.httpClient.get(this.productsApi).toPromise().then((prods: Array<any>) => {
       this.products.next(prods);
       return prods;
     }).catch(ProductsService.error);
   }
 
   getById(id): Promise<any> {
-    this.product = {_id: '', name: '', brand: ''};
+    this.product = { _id: '', name: '', brand: '' };
     return this.httpClient.get(`${this.productsApi}/${id}`).toPromise().then(prod => prod).catch(ProductsService.error);
   }
 
   postProduct(newProduct): Promise<any> {
     return this.httpClient.post(this.productsApi, newProduct).toPromise().then(prod => {
       this.product = prod;
-      this.get();
+      this.getProducts();
       return prod;
     }).catch(ProductsService.error);
   }
@@ -53,14 +47,14 @@ export class ProductsService {
   putProduct(id, updatedProduct): Promise<any> {
     return this.httpClient.put(`${this.productsApi}/${id}`, updatedProduct).toPromise().then(prod => {
       this.product = prod;
-      this.get();
+      this.getProducts();
       return prod;
     }).catch(ProductsService.error);
   }
 
   deleteProduct(id): Promise<any> {
     return this.httpClient.delete(`${this.productsApi}/${id}`).toPromise().then(prodId => {
-      this.get();
+      this.getProducts();
       return prodId;
     }).catch(ProductsService.error);
   }

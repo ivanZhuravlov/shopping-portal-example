@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../services/auth.service';
-import {Router} from '@angular/router';
-import {trigger} from '@angular/animations';
-import {UsersService} from '../services/users.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { trigger } from '@angular/animations';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +11,6 @@ import {UsersService} from '../services/users.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  title = 'login';
-
-  form: FormGroup;
-  failedLogin;
 
   constructor(private readonly fb: FormBuilder, private auth: AuthService, private router: Router, private us: UsersService) {
     this.form = this.fb.group({
@@ -25,12 +20,16 @@ export class LoginComponent implements OnInit {
     this.failedLogin = false;
   }
 
+  title = 'login';
+
+  form: FormGroup;
+  failedLogin;
+
   ngOnInit(): void {
   }
 
   submitLoginForm(): void {
     if (this.form.valid) {
-      // console.log(this.form.getRawValue());
       this.auth.login(this.form.getRawValue()).then(status => {
         if (!status) {
           console.log(status);
@@ -38,7 +37,7 @@ export class LoginComponent implements OnInit {
           this.failedLogin = true;
         } else {
           // console.log('Successful login.');
-          this.us.getUserById(this.auth.user._id).then(() => this.router.navigate([`/${this.auth.user.type}`, {trigger: 'SIGN_IN'}]));
+          this.us.getUserById(this.auth.user._id).then(() => this.router.navigate([`/${this.auth.user.type}`, { trigger: 'SIGN_IN' }]));
 
         }
       });
@@ -47,6 +46,6 @@ export class LoginComponent implements OnInit {
   }
 
   routeToRegistration(): void {
-    this.router.navigate(['/register', {trigger: 'SIGN_IN'}]);
+    this.router.navigate(['/register', { trigger: 'SIGN_IN' }]);
   }
 }

@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UsersService} from '../services/users.service';
-import {AuthService} from '../services/auth.service';
-import {Router} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { UsersService } from '../services/users.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -10,22 +10,14 @@ import {Router} from '@angular/router';
 })
 export class UserComponent implements OnInit {
 
-  @Input() userId = '';
-  @Input() userName = '';
-  @Input() userType = '';
-
-  @Input() loggedInUserType = '';
-
   constructor(private auth: AuthService, private us: UsersService, private router: Router) {
   }
 
-  ngOnInit(): void {
-  }
+  @Input() loggedInUserType = '';
 
-  editUser(): boolean | void {
-    // TODO: implement edit user server request and ui
-    this.unimplemented(false);
-  }
+  @Input() userId = '';
+  @Input() userName = '';
+  @Input() userType = '';
 
   deleteUser(): boolean | void {
     this.us.deleteUser(this.userId).then(id => {
@@ -35,10 +27,19 @@ export class UserComponent implements OnInit {
     });
   }
 
+  editUser(): boolean | void {
+    // TODO: implement edit user server request and ui
+    this.unimplemented(false);
+    this.router.navigate(['/edit/user', { trigger: 'USER-CREATE', userId: this.userId }]);
+  }
+
   logout(): void {
     this.auth.logout();
     this.us.getUserById('');
-    this.router.navigate(['/login', {trigger: 'USER_DELETED'}]);
+    this.router.navigate(['/login', { trigger: 'USER_DELETED' }]);
+  }
+
+  ngOnInit(): void {
   }
 
   unimplemented(direct: boolean = true): void {

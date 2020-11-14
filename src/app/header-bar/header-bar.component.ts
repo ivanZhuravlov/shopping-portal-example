@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from '../services/auth.service';
-import {UsersService} from '../services/users.service';
-import {Router} from '@angular/router';
+/* tslint:disable:variable-name max-line-length */
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { UsersService } from '../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-bar',
@@ -11,7 +12,7 @@ import {Router} from '@angular/router';
 export class HeaderBarComponent implements OnInit {
 
   constructor(private auth: AuthService, private us: UsersService, private router: Router) {
-    this.us.user.subscribe(({name, type}) => {
+    this.us.user.subscribe(({ name, type }) => {
       this.userName = name;
       this.userType = type;
     });
@@ -37,21 +38,18 @@ export class HeaderBarComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.userName || !this.userType) {
-      const {name, type} = this.auth.user;
+      const { name, type } = this.auth.user;
       this.userName = name;
       this.userType = type;
     }
   }
 
   purchase(): void {
-    // console.log('purchasing...');
-    // tslint:disable-next-line:variable-name
     this.us.getCart(this.auth.user._id).then(_cart => {
       if (_cart.length) {
-        this.us.putUser(this.auth.user._id, {cart: []}).then(() => this.us.getCart(this.auth.user._id));
+        this.us.putUser(this.auth.user._id, { cart: [] }).then(() => this.us.getCart(this.auth.user._id));
         return _cart;
       }
-      // tslint:disable-next-line:variable-name max-line-length
     }).then(_cart => alert(`Successfully purchased ${_cart.length} unique item${_cart.length === 1 ? '' : 's'} in cart!`)).catch(() => alert('No items in cart!'));
 
   }
@@ -59,23 +57,23 @@ export class HeaderBarComponent implements OnInit {
   logout(): void {
     this.auth.logout();
     this.us.getUserById('');
-    this.router.navigate(['/login', {trigger: 'SIGN_OUT'}]);
+    this.router.navigate(['/login', { trigger: 'SIGN_OUT' }]);
   }
 
   routeToUserPortal(): void {
-    this.router.navigate(['/user', {trigger: this.parent.toUpperCase()}]);
+    this.router.navigate(['/user', { trigger: this.parent.toUpperCase() }]);
   }
 
   routeToAdminPortal(): void {
-    this.router.navigate(['/admin', {trigger: this.parent.toUpperCase()}]);
+    this.router.navigate(['/admin', { trigger: this.parent.toUpperCase() }]);
   }
 
   routeToRegistration(): void {
-    this.router.navigate(['/register', {trigger: this.parent.toUpperCase()}]);
+    this.router.navigate(['/register', { trigger: this.parent.toUpperCase() }]);
   }
 
   routeToCreation(): void {
-    this.router.navigate(['/create', {trigger: this.parent.toUpperCase()}]);
+    this.router.navigate(['/create', { trigger: this.parent.toUpperCase() }]);
   }
 
   unimplemented(direct: boolean = true): void {
