@@ -445,7 +445,19 @@ app.delete("/api/carts/:userid/:productid", function (req, res) {
 /*  "/api/wishlists/:userid"
  *   GET: gets user's (by userid) wishlist
  */
-// TODO: implement get wishlist
+// TODO: change request to wishlists api and verify operation
+app.get("/api/wishlists/:id", function (req, res) {
+  database
+    .collection(USERS_COLLECTION)
+    .findOne({ _id: new ObjectID(req.params.id) }, function (error, data) {
+      if (error) {
+        manageError(res, error.message, "Failed to get user's wishlist.");
+      } else {
+        // console.log('User found.')
+        res.status(200).json(data.wishlist);
+      }
+    });
+});
 
 /*  "/api/wishlists/:userid/:productid"
  *   POST: adds product by productid to user's (by userid) wishlist
