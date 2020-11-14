@@ -6,7 +6,7 @@
     <button class="btn btn-success" (click)="purchase()">Purchase Items in Cart</button>
   </div>
   <div *ngIf="parents.admin.includes(parent)" class="">
-    <button class="btn btn-success" (click)="unimplemented()">Create Product</button>
+    <button class="btn btn-success" (click)="routeToCreation()">Create Product</button>
     <button class="btn btn-success" (click)="routeToRegistration()">Register User</button>
   </div>
   <div *ngIf="!parents.user.includes(parent) && loggedInUserType" class=" ml-2">

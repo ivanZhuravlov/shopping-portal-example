@@ -94,10 +94,10 @@ export class UsersService {
 
   deleteUser(id): Promise<any> {
     // tslint:disable-next-line:variable-name
-    return this.httpClient.delete(`${this.usersApi}/${id}`).toPromise().then(_user => {
+    return this.httpClient.delete(`${this.usersApi}/${id}`).toPromise().then(_id => {
       this.getUsers();
       // this.getUserById(id);
-      return _user;
+      return _id;
     }).catch(UsersService.error);
   }
 
@@ -130,9 +130,12 @@ export class UsersService {
     });
   }
 
-  putCart(userId, productId): void {
-    // TODO: implement put cart request and ui (if needed)
-    this.unimplemented(false);
+  putCart(userId, productId, increment): Promise<any> {
+    // tslint:disable-next-line:variable-name
+    return this.httpClient.put(`${this.cartsApi}/${userId}/${productId}/${increment}`, {}).toPromise().then(_cart => {
+      this.cart.next(_cart);
+      return _cart;
+    });
   }
 
   deleteCart(userId, productId): Promise<Array<any>> {

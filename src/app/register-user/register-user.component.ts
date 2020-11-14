@@ -40,7 +40,6 @@ export class RegisterUserComponent implements OnInit {
       registerFormVal.type = this.userType;
       this.us.postUser(registerFormVal).then(user => {
         if (!user) {
-          console.log(user);
           this.failedRegistration = true;
         } else {
           this.router.navigate(['/login', {trigger: 'REGISTER'}]);

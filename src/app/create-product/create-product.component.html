@@ -1,0 +1,15 @@
+<app-header-bar [parent]="title"></app-header-bar>
+<div class="text-center body-div" style="">
+  <form [formGroup]="form" class="form-signin" (ngSubmit)="submitCreationForm()">
+    <h3 class="mb-3 font-weight-normal">Please create product</h3>
+    <label for="inputProductName" class="sr-only">Product Name</label>
+    <input type="text" class="form-control" id="inputProductName" [formControlName]="'name'" placeholder="Product Name" autofocus autocomplete="on"/>
+    <label for="inputProductBrand" class="sr-only">Product Brand</label>
+    <input type="password" class="form-control" id="inputProductBrand" [formControlName]="'brand'" placeholder="Product Brand" autocomplete="on"/>
+    <p *ngIf="failedCreation" class="h6 mb-3 text-muted" style="font-size: 14px; color: crimson; border: 1px crimson;">Product details are invalid. Please try again.</p>
+    <p *ngIf="successfulCreation" class="h6 mb-3 text-muted" style="font-size: 14px; color: crimson; border: 1px crimson;">Product successfully created.</p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="form.invalid">Create Product</button>
+    <br>
+  </form>
+
+</div>

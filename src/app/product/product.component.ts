@@ -46,6 +46,14 @@ export class ProductComponent implements OnInit {
     return success;
   }
 
+  editCartQuantity(increment: number): boolean {
+    const success = this.auth.loggedIn;
+    if (success) {
+      this.us.putCart(this.auth.user._id, this.productId, increment);
+    }
+    return success;
+  }
+
   removeFromCart(): boolean {
     const success = this.auth.loggedIn;
     if (success) {
@@ -87,7 +95,7 @@ export class ProductComponent implements OnInit {
   }
 
   editProduct(): boolean | void {
-    // TODO: edit product server request and ui
+    // TODO: implement edit product server request and ui
     this.unimplemented(false);
   }
 

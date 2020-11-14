@@ -63,15 +63,19 @@ export class HeaderBarComponent implements OnInit {
   }
 
   routeToUserPortal(): void {
-    this.router.navigate(['/user', {trigger: 'ADMIN_PORTAL'}]);
+    this.router.navigate(['/user', {trigger: this.parent.toUpperCase()}]);
   }
 
   routeToAdminPortal(): void {
-    this.router.navigate(['/admin', {trigger: 'USER_PORTAL'}]);
+    this.router.navigate(['/admin', {trigger: this.parent.toUpperCase()}]);
   }
 
   routeToRegistration(): void {
     this.router.navigate(['/register', {trigger: this.parent.toUpperCase()}]);
+  }
+
+  routeToCreation(): void {
+    this.router.navigate(['/create', {trigger: this.parent.toUpperCase()}]);
   }
 
   unimplemented(direct: boolean = true): void {

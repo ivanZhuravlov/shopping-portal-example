@@ -4,7 +4,7 @@
     <h3 class="mb-3 font-weight-normal">Please create account</h3>
     <label for="inputUsername" class="sr-only">Username</label>
     <input type="text" class="form-control" id="inputUsername" [formControlName]="'name'" placeholder="Username" autofocus autocomplete="off"/>
-    <label for="inputPassword" class="sr-only">Username</label>
+    <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" class="form-control" id="inputPassword" [formControlName]="'password'" placeholder="Password" autocomplete="off"/>
     <div *ngIf="loggedInUserType === 'admin'" class="col">
       <label>Account type:</label>

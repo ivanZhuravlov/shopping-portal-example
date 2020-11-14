@@ -13,6 +13,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const {userModel, productModel} = require('./models/all');
+const { data } = require("jquery");
 
 // The database variable
 let database;
@@ -107,7 +108,7 @@ app.get("/api/products/:id", function (req, res) {
     if (error) {
       manageError(res, error.message, "Failed to get product.");
     } else {
-      console.log('Product found.')
+      // console.log('Product found.')
       res.status(200).json(data);
     }
   });
@@ -194,7 +195,7 @@ app.get("/api/users/:id", function (req, res) {
     if (error) {
       manageError(res, error.message, "Failed to get user.");
     } else {
-      console.log('User found.')
+      // console.log('User found.')
       res.status(200).json(data);
     }
   });
@@ -278,22 +279,124 @@ app.post("/api/carts/:userid/:productid", function (req, res) {
   } else if (req.params.productid.length !== 24) {
     manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 400);
   } else {
-    // TODO: handle adding to cart of existing item in cart by incrementing count by one
-    database.collection(USERS_COLLECTION).findOneAndUpdate(
-      { _id: new ObjectID(req.params.userid) },
-      {$push: {"cart": {_id: req.params.productid, count: 1}}},
-      {returnOriginal: false},
-      function (err, doc) {
-        if (err) {
-          manageError(res, err.message, "Failed to add product to cart.");
-        } else {
-          res.status(200).json(doc.value.cart);
+    database
+      .collection(USERS_COLLECTION)
+      .findOne(
+        {
+          _id: new ObjectID(req.params.userid),
+          cart: { $elemMatch: {_id: new ObjectID(req.params.productid)} },
+        },
+        function (error, data) {
+          if (data) {
+            database.collection(USERS_COLLECTION).findOneAndUpdate(
+              {
+                _id: new ObjectID(req.params.userid),
+                cart: {
+                  $elemMatch: { _id: new ObjectID(req.params.productid) },
+                },
+              },
+              { $inc: { "cart.$.count": 1 } },
+              { returnOriginal: false },
+              function (err, doc) {
+                if (err) {
+                  manageError(
+                    res,
+                    err.message,
+                    "Failed to increase product quantity in cart."
+                  );
+                } else {
+                  res.status(200).json(doc.value.cart);
+                }
+              }
+            );
+          } else {
+            database
+              .collection(USERS_COLLECTION)
+              .findOneAndUpdate(
+                { _id: new ObjectID(req.params.userid) },
+                {
+                  $push: {
+                    cart: { _id: new ObjectID(req.params.productid), count: 1 },
+                  },
+                },
+                { returnOriginal: false },
+                function (err, doc) {
+                  if (err) {
+                    manageError(
+                      res,
+                      err.message,
+                      "Failed to add product to cart."
+                    );
+                  } else {
+                    res.status(200).json(doc.value.cart);
+                  }
+                }
+              );
+          }
         }
-      });
+      );
+    // database.collection(USERS_COLLECTION).findOneAndUpdate(
+    //   { _id: new ObjectID(req.params.userid) },
+    //   {$push: {"cart": {_id: req.params.productid, count: 1}}},
+    //   {returnOriginal: false},
+    //   function (err, doc) {
+    //     if (err) {
+    //       manageError(res, err.message, "Failed to add product to cart.");
+    //     } else {
+    //       res.status(200).json(doc.value.cart);
+    //     }
+    // });
   }
 });
 
-// TODO: put for carts that updates the count of a existing product in the cart
+/*  "/api/carts/:userid/:productid/:inc"
+ *   PUT: increments product's (by productid) quantity in user's (by userid) cart by inc amount
+ */
+app.put("/api/carts/:userid/:productid/:inc", function (req, res) {
+  database.collection(USERS_COLLECTION).findOneAndUpdate(
+    {
+      _id: new ObjectID(req.params.userid),
+      cart: {
+        $elemMatch: { _id: new ObjectID(req.params.productid) },
+      },
+    },
+    { $inc: { "cart.$.count": Number(req.params.inc) } },
+    { returnOriginal: false },
+    function (err, doc) {
+      if (err) {
+        manageError(
+          res,
+          err.message,
+          "Failed to increment product quantity in cart."
+        );
+      } else {
+        if (doc.value.cart.find(product => product._id == req.params.productid).count < 1) {
+          database
+            .collection(USERS_COLLECTION)
+            .findOneAndUpdate(
+              { _id: new ObjectID(req.params.userid) },
+              { $pull: { cart: { _id: new ObjectID(req.params.productid) } } },
+              { returnOriginal: false },
+              function (err, doc) {
+                if (err) {
+                  manageError(
+                    res,
+                    err.message,
+                    "Failed to remove product from cart."
+                  );
+                } else {
+                  res.status(200).json(doc.value.cart);
+                }
+              }
+            );
+        } else {
+          res.status(200).json(doc.value.cart);
+        }
+        
+      }
+    }
+  );
+})
 
 /*  "/api/carts/:userid/:productid"
  *   DELETE: deletes product by productid from user's (by userid) cart
@@ -305,17 +408,24 @@ app.delete("/api/carts/:userid/:productid", function (req, res) {
     manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 400);
   } else {
     // console.log(req.params.productid);
-    database.collection(USERS_COLLECTION).findOneAndUpdate(
-      { _id: new ObjectID(req.params.userid) },
-      {$pull: {"cart": {_id: req.params.productid}}},
-      {returnOriginal: false},
-      function (err, doc) {
-      if (err) {
-        manageError(res, err.message, "Failed to remove product from cart.");
-      } else {
-        res.status(200).json(doc.value.cart);
-      }
-    });
+    database
+      .collection(USERS_COLLECTION)
+      .findOneAndUpdate(
+        { _id: new ObjectID(req.params.userid) },
+        { $pull: { cart: { _id: new ObjectID(req.params.productid) } } },
+        { returnOriginal: false },
+        function (err, doc) {
+          if (err) {
+            manageError(
+              res,
+              err.message,
+              "Failed to remove product from cart."
+            );
+          } else {
+            res.status(200).json(doc.value.cart);
+          }
+        }
+      );
   }
 });
 //endregion
@@ -335,18 +445,20 @@ app.post("/api/wishlists/:userid/:productid", function (req, res) {
   } else if (req.params.productid.length !== 24) {
     manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 400);
   } else {
-    // TODO: handle adding to wishlist of existing item in cart by ignoring
-    database.collection(USERS_COLLECTION).findOneAndUpdate(
-      { _id: new ObjectID(req.params.userid) },
-      {$push: {"wishlist": {_id: req.params.productid}}},
-      {returnOriginal: false},
-      function (err, doc) {
-        if (err) {
-          manageError(res, err.message, "Failed to add product to wishlist.");
-        } else {
-          res.status(200).json(doc.value.wishlist);
+    database
+      .collection(USERS_COLLECTION)
+      .findOneAndUpdate(
+        { _id: new ObjectID(req.params.userid) },
+        { $addToSet: { wishlist: { _id: new ObjectID(req.params.productid) } } },
+        { returnOriginal: false },
+        function (err, doc) {
+          if (err) {
+            manageError(res, err.message, "Failed to add product to wishlist.");
+          } else {
+            res.status(200).json(doc.value.wishlist);
+          }
         }
-      });
+      );
   }
 });
 
@@ -359,17 +471,24 @@ app.delete("/api/wishlists/:userid/:productid", function (req, res) {
   } else if (req.params.productid.length !== 24) {
     manageError(res, "Invalid product id", "ID must be a single String of 12 bytes or a string of 24 hex characters.", 400);
   } else {
-    database.collection(USERS_COLLECTION).findOneAndUpdate(
-      { _id: new ObjectID(req.params.userid) },
-      {$pull: {"wishlist": {_id: req.params.productid}}},
-      {returnOriginal: false},
-      function (err, doc) {
-        if (err) {
-          manageError(res, err.message, "Failed to remove product from wishlist.");
-        } else {
-          res.status(200).json(doc.value.wishlist);
+    database
+      .collection(USERS_COLLECTION)
+      .findOneAndUpdate(
+        { _id: new ObjectID(req.params.userid) },
+        { $pull: { wishlist: { _id: new ObjectID(req.params.productid) } } },
+        { returnOriginal: false },
+        function (err, doc) {
+          if (err) {
+            manageError(
+              res,
+              err.message,
+              "Failed to remove product from wishlist."
+            );
+          } else {
+            res.status(200).json(doc.value.wishlist);
+          }
         }
-      });
+      );
   }
 });
 //endregion
@@ -416,6 +535,6 @@ app.use(function (err, req, res, next) {
 
 // Errors handler.
 function manageError(res, reason, message, code) {
-  console.log("Error: " + reason);
+  console.log("Error: ", reason, "; Message: ", message, "; Code: ", code || 500);
   res.status(code || 500).json({ "error": message });
 }
