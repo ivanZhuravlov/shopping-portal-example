@@ -10,6 +10,8 @@ const ObjectID = mongodb.ObjectID;
 
 const cors = require('cors');
 
+const path = require('path');
+
 require('dotenv').config();
 
 const {userModel, productModel} = require('./models/all');
@@ -546,6 +548,11 @@ app.post("/api/auth", function (req, res) {
   }
 });
 //endregion
+
+app.get("/*", function (req, res) {
+  console.log(path.join(distDir + "index.html"));
+  res.sendFile(path.join(distDir + "index.html"));
+});
 
 // FIXME: currently does nothing
 app.use(function (err, req, res, next) {
