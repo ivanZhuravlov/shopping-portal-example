@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   submitLoginForm(): void {
+    this.failedLogin = false;
     if (this.form.valid) {
       this.auth.login(this.form.getRawValue()).then(status => {
         if (!status) {

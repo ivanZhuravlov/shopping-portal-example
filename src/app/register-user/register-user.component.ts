@@ -33,6 +33,7 @@ export class RegisterUserComponent implements OnInit {
   ngOnInit(): void {}
 
   submitRegisterForm(): void {
+    this.failedRegistration = false;
     if (this.form.valid) {
       const registerFormVal = this.form.getRawValue();
       registerFormVal.type = this.userType;

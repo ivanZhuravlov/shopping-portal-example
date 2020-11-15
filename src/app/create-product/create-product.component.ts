@@ -30,6 +30,8 @@ export class CreateProductComponent implements OnInit {
   }
 
   submitCreationForm(): void {
+    this.failedCreation = false;
+    this.successfulCreation = false;
     if (this.form.valid) {
       this.ps.postProduct(this.form.getRawValue()).then(product => {
         if (!product) {
