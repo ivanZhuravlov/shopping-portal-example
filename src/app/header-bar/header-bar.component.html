@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <p *ngIf="loggedInUserType" class="h5" [textContent]="'Welcome, ' + userName"></p>
+    <p *ngIf="loggedInUserType" class="h5" [textContent]="'Welcome to Fashionista, ' + userName"></p>
   </div>
   <div *ngIf="parents.user.includes(parent)" class="">
     <button class="btn btn-success" (click)="purchase()">Purchase Items in Cart</button>
