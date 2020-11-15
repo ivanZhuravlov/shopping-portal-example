@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class UserPortalComponent implements OnInit {
 
 
-  constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService, private router: Router) {
+  constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService) {
     this.us.user.subscribe(_user => {
       this.user = _user;
       this.userType = _user.type;
@@ -54,11 +54,4 @@ export class UserPortalComponent implements OnInit {
     this.us.getUserById(this.auth.user._id);
     this.ps.getProducts();
   }
-
-  logout(): void {
-    this.auth.logout();
-    this.us.getUserById('');
-    this.router.navigate(['/login', { trigger: 'SIGN_OUT' }]);
-  }
-
 }

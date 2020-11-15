@@ -34,18 +34,10 @@ export class UserComponent implements OnInit {
   logout(): void {
     this.auth.logout();
     this.us.getUserById('');
-    this.router.navigate(['/login', { trigger: 'USER_DELETED' }]);
+    this.router.navigate(['/login'], { queryParams: { trigger: 'USER_DELETED' } });
   }
 
   ngOnInit(): void {
-  }
-
-  unimplemented(direct: boolean = true): void {
-    if (direct) {
-      throw new Error('function not specified');
-    } else {
-      throw new Error('unimplemented');
-    }
   }
 
 }

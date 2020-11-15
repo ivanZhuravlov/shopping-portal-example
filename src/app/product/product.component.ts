@@ -98,12 +98,4 @@ export class ProductComponent implements OnInit {
     this.ps.deleteProduct(this.productId);
   }
 
-  unimplemented(direct: boolean = true): void {
-    if (direct) {
-      throw new Error('function not specified');
-    } else {
-      throw new Error('unimplemented');
-    }
-  }
-
 }

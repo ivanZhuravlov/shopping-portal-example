@@ -57,31 +57,23 @@ export class HeaderBarComponent implements OnInit {
   logout(): void {
     this.auth.logout();
     this.us.getUserById('');
-    this.router.navigate(['/login', { trigger: 'SIGN_OUT' }]);
+    this.router.navigate(['/login'], { queryParams: { trigger: 'SIGN_OUT' } });
   }
 
   routeToUserPortal(): void {
-    this.router.navigate(['/user', { trigger: this.parent.toUpperCase() }]);
+    this.router.navigate(['/user'], { queryParams: { trigger: this.parent.toUpperCase() } });
   }
 
   routeToAdminPortal(): void {
-    this.router.navigate(['/admin', { trigger: this.parent.toUpperCase() }]);
+    this.router.navigate(['/admin'], { queryParams: { trigger: this.parent.toUpperCase() } });
   }
 
   routeToRegistration(): void {
-    this.router.navigate(['/register', { trigger: this.parent.toUpperCase() }]);
+    this.router.navigate(['/register'], { queryParams: { trigger: this.parent.toUpperCase() } });
   }
 
   routeToCreation(): void {
-    this.router.navigate(['/create', { trigger: this.parent.toUpperCase() }]);
-  }
-
-  unimplemented(direct: boolean = true): void {
-    if (direct) {
-      throw new Error('function not specified');
-    } else {
-      throw new Error('unimplemented');
-    }
+    this.router.navigate(['/create'], { queryParams: { trigger: this.parent.toUpperCase() } });
   }
 
 }

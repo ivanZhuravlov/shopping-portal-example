@@ -24,12 +24,6 @@ export class AuthService {
     const type = this.getWithExpiry(this.TYPE_KEY);
     const name = this.getWithExpiry(this.NAME_KEY);
     return (_id && type && name) ? { _id, name, type } : {};
-    if (this.loggedInStatus && this.getWithExpiry(this.KEY)) {
-      return this.currentUser;
-    } else {
-      this.logout();
-      return this.currentUser;
-    }
   }
 
   get loggedIn(): boolean {

@@ -80,10 +80,11 @@ export class UsersService {
   }
 
   getCart(id): Promise<Array<any>> {
+    // @ts-ignore
     return this.httpClient.get(`${this.cartsApi}/${id}`).toPromise().then((_cart: Array<any>) => {
       this.cart.next(_cart);
       return _cart;
-    });
+    }).catch(UsersService.error);
   }
 
   postCart(userId, productId): Promise<Array<any>> {
@@ -91,14 +92,14 @@ export class UsersService {
     return this.httpClient.post(`${this.cartsApi}/${userId}/${productId}`).toPromise().then(_cart => {
       this.cart.next(_cart);
       return _cart;
-    });
+    }).catch(UsersService.error);
   }
 
   putCart(userId, productId, increment): Promise<any> {
     return this.httpClient.put(`${this.cartsApi}/${userId}/${productId}/${increment}`, {}).toPromise().then(_cart => {
       this.cart.next(_cart);
       return _cart;
-    });
+    }).catch(UsersService.error);
   }
 
   deleteCart(userId, productId): Promise<Array<any>> {
@@ -131,13 +132,5 @@ export class UsersService {
       this.wishlist.next(_wishlist);
       return _wishlist;
     }).catch(UsersService.error);
-  }
-
-  unimplemented(direct: boolean = true): void {
-    if (direct) {
-      throw new Error('function not specified');
-    } else {
-      throw new Error('unimplemented');
-    }
   }
 }

@@ -40,7 +40,7 @@ export class RegisterUserComponent implements OnInit {
         if (!user) {
           this.failedRegistration = true;
         } else {
-          this.router.navigate(['/login', { trigger: 'REGISTER' }]);
+          this.router.navigate(['/login'], { queryParams: { trigger: 'REGISTER' } });
         }
       });
     }
@@ -48,7 +48,7 @@ export class RegisterUserComponent implements OnInit {
   }
 
   routeToLogin(): void {
-    this.router.navigate(['/login', { trigger: 'REGISTER' }]);
+    this.router.navigate(['/login'], { queryParams: { trigger: 'REGISTER' } });
   }
 
 }

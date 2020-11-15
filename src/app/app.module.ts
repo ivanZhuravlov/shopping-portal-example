@@ -15,6 +15,8 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user/user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { CreateProductComponent } from './create-product/create-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CreateProductComponent } from './create-product/create-product.componen
     UserListComponent,
     UserComponent,
     RegisterUserComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    EditProductComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

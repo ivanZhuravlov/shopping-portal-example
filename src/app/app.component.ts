@@ -9,7 +9,7 @@ import { UsersService } from './services/users.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private auth: AuthService, private us: UsersService) {}
+  constructor() {}
 
   title = 'shopping-portal-example';
 
