@@ -17,7 +17,8 @@ export class AuthService {
   private TTL = 1000 * 60 * 10;
   private API_PORT = environment.apiPort;
 
-  private authApi = `http://localhost:${this.API_PORT}/api/auth`;
+  private authApiForced = `http://localhost:${this.API_PORT}/api/auth`;
+  private authApi = '/api/auth';
 
   private currentUser = {};
   private loggedInStatus = false;

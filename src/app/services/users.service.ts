@@ -24,9 +24,13 @@ export class UsersService {
 
   private API_PORT = environment.apiPort;
 
-  private usersApi = `http://localhost:${this.API_PORT}/api/users`;
-  private cartsApi = `http://localhost:${this.API_PORT}/api/carts`;
-  private wishlistsApi = `http://localhost:${this.API_PORT}/api/wishlists`;
+  private usersApiForced = `http://localhost:${this.API_PORT}/api/users`;
+  private cartsApiForced = `http://localhost:${this.API_PORT}/api/carts`;
+  private wishlistsApiForced = `http://localhost:${this.API_PORT}/api/wishlists`;
+
+  private usersApi = '/api/users';
+  private cartsApi = '/api/carts';
+  private wishlistsApi = '/api/wishlists';
 
 
 

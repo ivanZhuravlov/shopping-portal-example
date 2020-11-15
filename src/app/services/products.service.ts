@@ -14,7 +14,8 @@ export class ProductsService {
 
   private API_PORT = environment.apiPort;
 
-  private productsApi = `http://localhost:${this.API_PORT}/api/products`;
+  private productsApiForced = `http://localhost:${this.API_PORT}/api/products`;
+  private productsApi = '/api/products';
 
   products;
   product;
