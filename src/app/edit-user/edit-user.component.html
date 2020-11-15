@@ -1,0 +1,32 @@
+<app-header-bar [parent]="title"></app-header-bar>
+<div class="text-center body-div" style="">
+  <form [formGroup]="form" class="form-signin" (ngSubmit)="submitEditUserForm()">
+    <app-user [userId]="userId" [loggedInUserType]="loggedInUserType" [userType]="selectedUserType || userType" [userName]="form.value.name || userName"></app-user>
+    <h3 class="mb-3 font-weight-normal">Please edit user</h3>
+    <div class="mb-3 col">
+      <label>Account type:</label>
+      <div class="ml-2 btn-group dropright">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="productOptions" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" [textContent]="selectedUserType.charAt(0).toUpperCase() + selectedUserType.slice(1)">
+        </button>
+        <div>
+          <div class="dropdown-menu" aria-labelledby="userTypeOptions">
+            <button class="btn dropdown-item" type="button" (click)="selectedUserType = 'user'">User</button>
+            <button class="btn dropdown-item" type="button" (click)="selectedUserType = 'admin'">Admin</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" class="form-control" id="inputUsername" [formControlName]="'name'" placeholder="Username" autofocus autocomplete="off"/>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" class="form-control" id="inputPassword" [formControlName]="'password'" placeholder="Password" autocomplete="off"/>
+
+    <p *ngIf="failedEdit" class="h6 mb-3 text-muted" style="font-size: 14px; color: crimson; border: 1px crimson;">User details are invalid. Please try again.</p>
+    <p *ngIf="successfulEdit" class="h6 mb-3 text-muted" style="font-size: 14px; color: crimson; border: 1px crimson;">User details saved.</p>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="form.invalid">Save user</button>
+    <br>
+  </form>
+
+</div>

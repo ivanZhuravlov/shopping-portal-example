@@ -28,9 +28,7 @@ export class UserComponent implements OnInit {
   }
 
   editUser(): boolean | void {
-    // TODO: implement edit user server request and ui
-    this.unimplemented(false);
-    this.router.navigate(['/edit/user', { trigger: 'USER-CREATE', userId: this.userId }]);
+    this.router.navigate(['/edit/user'], { queryParams: { trigger: 'ADMIN-PORTAL', userId: this.userId } });
   }
 
   logout(): void {
