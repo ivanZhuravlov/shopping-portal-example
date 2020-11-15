@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -10,7 +11,7 @@ import { UsersService } from '../services/users.service';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService) { }
+  constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService, private router: Router) { }
 
   @Input() productId;
   @Input() productName;
@@ -90,8 +91,7 @@ export class ProductComponent implements OnInit {
   }
 
   editProduct(): boolean | void {
-    // TODO: implement edit product server request and ui
-    this.unimplemented(false);
+    this.router.navigate(['/edit/product'], { queryParams: { trigger: 'ADMIN-PORTAL', productId: this.productId } });
   }
 
   deleteProduct(): boolean | void {
