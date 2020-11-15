@@ -56,6 +56,7 @@ export class HeaderBarComponent implements OnInit {
 
   logout(): void {
     this.auth.logout();
+    this.loggedInUserType = '';
     this.us.getUserById('');
     this.router.navigate(['/login'], { queryParams: { trigger: 'SIGN_OUT' } });
   }
