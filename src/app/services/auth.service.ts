@@ -1,6 +1,7 @@
 /* tslint:disable:variable-name */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,9 @@ export class AuthService {
   private TYPE_KEY = 'fashionista-auth-type';
   private NAME_KEY = 'fashionista-auth-name';
   private TTL = 1000 * 60 * 10;
-  private authApi = '/api/auth';
+  private API_PORT = environment.apiPort;
+
+  private authApi = `http://localhost:${this.API_PORT}/api/auth`;
 
   private currentUser = {};
   private loggedInStatus = false;
