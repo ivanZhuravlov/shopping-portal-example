@@ -109,11 +109,11 @@ export class UsersService {
     }).catch(UsersService.error);
   }
 
-  // FIXME: change to use a get request to the wishlists api
   getWishlist(id): Promise<Array<any>> {
-    return this.httpClient.get(`${this.usersApi}/${id}`).toPromise().then((_user: any) => {
-      this.wishlist.next(_user.wishlist);
-      return _user.wishlist;
+    // @ts-ignore
+    return this.httpClient.get(`${this.wishlistsApi}/${id}`).toPromise().then((_wishlist: Array<any>) => {
+      this.wishlist.next(_wishlist);
+      return _wishlist;
     }).catch(UsersService.error);
   }
 

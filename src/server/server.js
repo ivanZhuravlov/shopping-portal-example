@@ -445,7 +445,6 @@ app.delete("/api/carts/:userid/:productid", function (req, res) {
 /*  "/api/wishlists/:userid"
  *   GET: gets user's (by userid) wishlist
  */
-// TODO: change request to wishlists api and verify operation
 app.get("/api/wishlists/:id", function (req, res) {
   database
     .collection(USERS_COLLECTION)
@@ -541,7 +540,7 @@ app.post("/api/auth", function (req, res) {
         } else {
           manageError(res, "Login data matches no user accounts.", "Auth failed. No such user.");
         }
-        
+
       }
     });
   }
