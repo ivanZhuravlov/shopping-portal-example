@@ -1,6 +1,7 @@
 <app-header-bar [parent]="title"></app-header-bar>
 <div class="text-center body-div" style="">
   <form [formGroup]="form" class="form-signin" (ngSubmit)="submitRegisterForm()">
+    <h1 class="mb-3">Fashionista</h1>
     <h3 class="mb-3 font-weight-normal">Please create account</h3>
     <div *ngIf="loggedInUserType === 'admin'" class="mb-3 col">
       <label>Account type:</label>
