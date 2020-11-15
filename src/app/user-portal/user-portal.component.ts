@@ -11,7 +11,6 @@ import { UsersService } from '../services/users.service';
 })
 export class UserPortalComponent implements OnInit {
 
-
   constructor(private auth: AuthService, private ps: ProductsService, private us: UsersService) {
     this.us.user.subscribe(_user => {
       this.user = _user;
