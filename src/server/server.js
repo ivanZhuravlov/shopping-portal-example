@@ -383,7 +383,7 @@ app.put("/api/carts/:userid/:productid/:inc", function (req, res) {
           "Failed to increment product quantity in cart."
         );
       } else {
-        if (doc.value.cart.find(product => product._id === req.params.productid).count < 1) {
+        if (doc.value.cart.find(product => String(product._id) === req.params.productid).count < 1) {
           database
             .collection(USERS_COLLECTION)
             .findOneAndUpdate(
